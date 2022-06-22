@@ -19,11 +19,6 @@ int main() {
     manager.showPasswords();
 
     std::cout<<"TEST dodania" << std::endl;
-    manager.addPassword(password1);
-    manager.showPasswords();
-
-    std::cout<<"TEST usuniecia " << std::endl;
-    manager.deletePassword(password2);
-    manager.showPasswords();
+    manager.addPassword();
     return 0;
 }

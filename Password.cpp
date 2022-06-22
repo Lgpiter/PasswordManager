@@ -12,4 +12,13 @@ const std::string &Password::getPassword() const {
     return password;
 }
 
+int Password::isSafe(std::string &password) {
+    //to check if all parameters are fine
+    int counter = 0;
+    if(password.length() > 10)
+}
+
+
+
+
 

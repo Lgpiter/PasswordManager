@@ -17,7 +17,7 @@ public:
 
     void findPassword();
     void sortPasswords();
-    void addPassword(Password password);
+    void addPassword();
     void editPassword();
     void deletePassword(Password password);
     void addCategory();
