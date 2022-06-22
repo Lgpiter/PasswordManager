@@ -53,14 +53,30 @@ void Manager::addPassword() {
         }
     }
 
-    int category;
+    int categoryChoice;
 
     cout << "Wybierz kategorie, do ktorej chcesz dodac haslo" << std::endl;
-    cin >> category;
+    cin >> categoryChoice;
 
-    Password tmp {name,password,login,category};
-    passwords.push_back(tmp);
+    for(int i = 0; i < categories.size(); i++){
+        if(categoryChoice == categories[i].getIndex()){
+            Password tmp {name,password,login,categories[i]};
+            passwords.push_back(tmp);
+            break;
+        }
+    }
 }
+
+void Manager::addCategory() {
+    string name;
+    cout << "Podaj nazwe kategori, ktora chcesz stowrzyc " << endl;
+    cin >> name;
+
+    int size = categories.size() + 1;
+    Category category {name, size};
+    categories.push_back(category);
+}
+
 void Manager::deleteCategory() {};
 
 void Manager::deletePassword(Password password) {

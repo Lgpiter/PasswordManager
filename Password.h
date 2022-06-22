@@ -2,15 +2,16 @@
 #define PASSWORDMANAGER_PASSWORD_H
 
 #include <string>
+#include "Category.h"
 
 class Password {
     std::string name;
     std::string password;
     std::string login;
-    int category;
+    Category category;
 
 public:
-    Password(const std::string &name, const std::string &password, const std::string &login, int category);
+    Password(const std::string &name, const std::string &password, const std::string &login, const Category &category);
 
     const std::string &getPassword() const;
 
