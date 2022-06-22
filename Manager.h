@@ -32,8 +32,8 @@ public:
     void showPasswords();
 
     void printMenu();
-    int isSafe(std::string password);
-    std::string createPassword();
+    static int isSafe(const std::string& password);
+    static std::string createPassword();
 };
 
 

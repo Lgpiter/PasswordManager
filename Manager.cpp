@@ -3,7 +3,7 @@
 #include "vector"
 #include "string"
 #include "algorithm"
-#include "time.h"
+#include <ctime>
 
 using namespace std;
 
@@ -32,10 +32,10 @@ void Manager::findPassword() {
             getline(std::cin,passwordName);
 
             cout << passwordName << endl;
-            for(int i = 0; i < passwords.size(); i++){
-                if(passwords[i].getName().compare(passwordName) == 0) {
+            for(auto & password : passwords){
+                if(password.getName() == passwordName) {
                     isFound = true;
-                    passwords[i].show();
+                    password.show();
                 }
             }
             break;
@@ -47,10 +47,10 @@ void Manager::findPassword() {
             cin.ignore();
             getline(std::cin,login);
 
-            for(int i = 0; i < passwords.size(); i++){
-                if(passwords[i].getLogin().compare(login) == 0) {
+            for(auto & password : passwords){
+                if(password.getLogin() == login){
                     isFound = true;
-                    passwords[i].show();
+                    password.show();
                 }
             }
             break;
@@ -60,10 +60,10 @@ void Manager::findPassword() {
             cout << "Podaj haslo jakie chcesz znalezc" << endl;
             cin.ignore();
             getline(std::cin,password);
-            for(int i = 0; i < passwords.size(); i++){
-                if(passwords[i].getPassword().compare(password) == 0) {
+            for(auto & i : passwords){
+                if(i.getPassword() == password) {
                     isFound = true;
-                    passwords[i].show();
+                    i.show();
                 }
             }
             break;
@@ -72,10 +72,10 @@ void Manager::findPassword() {
             string category;
             cout << "Podaj kategorie hasla jakie chcesz znalezc" << endl;
             cin >> category;
-            for(int i = 0; i < passwords.size(); i++){
-                if(passwords[i].getCategory().getName().compare(category)) {
+            for(auto & password : passwords){
+                if(password.getCategory().getName() == category) {
                     isFound = true;
-                    passwords[i].show();
+                    password.show();
                 }
             }
             break;
@@ -88,7 +88,7 @@ void Manager::findPassword() {
     if(!isFound){
         cout << "Nie znaleziono zadnych hasel o powyzszych kryteriach" << endl;
     }
-};
+}
 
 
 //DZIALA
@@ -109,7 +109,7 @@ void Manager::sortPasswords(functype1 f1,funcType2 f2) {
     }
 
     showPasswords();
-};
+}
 void Manager::sortType() {
     int choice1;
     int choice2;
@@ -271,7 +271,7 @@ void Manager::editPassword() {
         }
     }
 
-};
+}
 
 void Manager::addPassword() {
     string name;
@@ -323,9 +323,9 @@ void Manager::addPassword() {
     cout << "Wybierz kategorie, do ktorej chcesz dodac haslo" << std::endl;
     cin >> categoryChoice;
 
-    for(int i = 0; i < categories.size(); i++){
-        if(categoryChoice == categories[i].getIndex()){
-            Password tmp {name,password,login,categories[i]};
+    for(auto & categorie : categories){
+        if(categoryChoice == categorie.getIndex()){
+            Password tmp {name,password,login,categorie};
             passwords.push_back(tmp);
             break;
         }
@@ -339,15 +339,15 @@ void Manager::addCategory() {
     cin.ignore();
     getline(cin,name);
 
-    int size = categories.size() + 1;
+    int size = (int)categories.size() + 1;
     Category category {name, size};
     categories.push_back(category);
 }
 
 //dziala
 void Manager::deleteCategory() {
-    for(int i = 0; i < categories.size(); i++)
-        categories[i].show();
+    for(auto & categorie : categories)
+        categorie.show();
 
     int choice;
     cout << "Wybierz numer kategorii, ktora chcesz usunac" << endl;
@@ -366,7 +366,7 @@ void Manager::deleteCategory() {
     }
 
     showPasswords();
-};
+}
 
 //dziala
 void Manager::deletePassword() {
@@ -395,15 +395,15 @@ void Manager::showPasswords() {
 }
 
 //funkcja dziala
-int Manager::isSafe(std::string password) {
+int Manager::isSafe(const std::string& password) {
     //to check if all parameters are fine
     int counter = 0;
     if(password.length() > 10)
         counter++;
 
     bool isBigLetter = false;
-    for(int i = 0; i < password.length(); i++){
-        if(isupper(password[i]))
+    for(char i : password){
+        if(isupper(i))
             isBigLetter = true;
     }
 
@@ -413,9 +413,9 @@ int Manager::isSafe(std::string password) {
     bool isSpecialCharacter = false;
     std::string specialCharacter = "!@$%^&*?/,.|";
 
-    for(int i = 0; i < password.length(); i++){
-        for(int j = 0; j < specialCharacter.length(); j++){
-            if(password[i] == specialCharacter[j])
+    for(char i : password){
+        for(char j : specialCharacter){
+            if(i == j)
                 isSpecialCharacter = true;
         }
     }
@@ -443,7 +443,7 @@ std::string Manager::createPassword() {
 
     string special = "!@#$%^&*(){}[]|:;'<>?,./";
 
-    srand(time(NULL));
+    srand(time(nullptr));
     for(int i = 0; i < length; i++){
         if(i%3 == 0 && specialCharacters == 'y'){
             //co 3 znak bedzie znakiem specjalnym
