@@ -8,4 +8,6 @@ add_executable(PasswordManager main.cpp
                 Password.h
                 Manager.cpp
                 Manager.h
+                Category.cpp
+                Category.h
         )

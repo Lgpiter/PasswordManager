@@ -63,9 +63,6 @@ void Manager::addPassword() {
 }
 void Manager::deleteCategory() {};
 
-
-
-
 void Manager::deletePassword(Password password) {
     for(int i = 0; i <passwords.size(); i++){
         if(passwords[i].getPassword() == password.getPassword())

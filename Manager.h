@@ -7,10 +7,12 @@
 
 #include "vector"
 #include "Password.h"
+#include "Category.h"
 
 
 class Manager {
     std::vector <Password> passwords;
+    std::vector <Category> categories;
 
 public:
     Manager(const std::vector<Password> &passwords);
