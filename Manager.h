@@ -23,6 +23,8 @@ public:
     void addCategory();
     void deleteCategory();
     void showPasswords();
+
+    int isSafe(std::string password);
 };
 
 

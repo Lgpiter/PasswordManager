@@ -14,8 +14,6 @@ public:
 
     const std::string &getPassword() const;
 
-    int isSafe(std::string &password);
-
     void show();
 };
 

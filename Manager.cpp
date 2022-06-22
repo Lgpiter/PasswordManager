@@ -25,7 +25,28 @@ void Manager::addPassword() {
             pom = 1;
         }
         else if (choice == 1){
-            cout << "Kod do wpisywania hasla";
+            string password;
+            cout << "Podaj swoje haslo";
+            cin >>password;
+            cout << "Sila Twojego hasla to: ";
+            switch (isSafe(password)) {
+                case 0 :{
+                    cout << "slabe" << endl;
+                    break;
+                }
+                case 1:{
+                    cout << "srednie" << endl;
+                }
+                case 2:{
+                    cout << "mocne" << endl;
+                }
+                case 3:{
+                    cout << "bardzo mocne" << endl;
+                }
+
+            }
+
+
             pom = 1;
         }
     }
@@ -45,6 +66,37 @@ void Manager::showPasswords() {
     for(int i = 0; i < passwords.size(); i++){
         passwords[i].show();
     }
+}
+
+int Manager::isSafe(std::string password) {
+    //to check if all parameters are fine
+    int counter = 0;
+    if(password.length() > 10)
+        counter++;
+
+    bool isBigLetter = false;
+    for(int i = 0; i < password.length(); i++){
+        if(isupper(password[i]))
+            isBigLetter = true;
+    }
+
+    if(isBigLetter)
+        counter++;
+
+    bool isSpecialCharacter = false;
+    std::string specialCharacter = "!@$%^&*?/,.|";
+
+    for(int i = 0; i < password.length(); i++){
+        for(int j = 0; j < specialCharacter.length(); j++){
+            if(password[i] == specialCharacter[j])
+                isSpecialCharacter = true;
+        }
+    }
+
+    if(isSpecialCharacter)
+        counter++;
+
+    return counter;
 }
 
 
