@@ -5,6 +5,7 @@
 #ifndef PASSWORDMANAGER_CATEGORY_H
 #define PASSWORDMANAGER_CATEGORY_H
 
+#include <ostream>
 #include "string"
 
 class Category {
@@ -14,6 +15,9 @@ public:
     Category(const std::string &name, int index);
 
     int getIndex() const;
+    void show();
+
+    friend std::ostream &operator<<(std::ostream &os, const Category &category);
 };
 
 

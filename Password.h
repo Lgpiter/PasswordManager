@@ -15,6 +15,16 @@ public:
 
     const std::string &getPassword() const;
 
+    const Category &getCategory() const;
+
+    void setName(const std::string &name);
+
+    void setPassword(const std::string &password);
+
+    void setLogin(const std::string &login);
+
+    void setCategory(const Category &category);
+
     void show();
 };
 

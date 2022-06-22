@@ -6,7 +6,65 @@ using namespace std;
 
 void Manager::findPassword() {};
 void Manager::sortPasswords() {};
-void Manager::editPassword() {};
+
+
+void Manager::editPassword() {
+    for(int i = 0; i < passwords.size(); i++){
+        cout << i + 1 << ".";
+        passwords[i].show();
+    }
+
+    int choice;
+    cout << "Ktore haslo chcesz zmienic?" << endl;
+    cin >> choice;
+
+
+
+    int changeChoice;
+    cout << "Co chcesz zmienic w hasle? " << endl;
+    cout << "1 -> nazwa" << endl;
+    cout << "2 -> login" << endl;
+    cout << "3 -> haslo" << endl;
+    cout << "4 -> kategorie" << endl;
+    cin >>changeChoice;
+
+
+    switch (changeChoice) {
+        case 1:{
+            string name;
+            cout << "Podaj nazwe na jaka chcesz zmienic" << endl;
+            cin >> name;
+            passwords[choice -1].setName(name);
+            break;
+        }
+        case 2:{
+            string login;
+            cout << "Podaj login na jaki chcesz zmienic" << endl;
+            cin >> login;
+            passwords[choice-1].setLogin(login);
+            break;
+        }
+        case 3:{
+            string password;
+            cout << "Podaj haslo na jakie chcesz zmienic" << endl;
+            cin >> password;
+            passwords[choice - 1].setPassword(password);
+            break;
+        }
+        case 4:{
+            int categoryChoice;
+            for(int i = 0; i < categories.size(); i++){
+                cout << i + 1 << ".";
+                categories[i].show();
+            }
+            cout << "Wybierz numer kategori, na ktora chcesz zmienic" << endl;
+            cin >> categoryChoice;
+            passwords[choice-1].setCategory(categories[categoryChoice-1]);
+            break;
+        }
+    }
+
+};
 
 void Manager::addPassword() {
     string name;
@@ -77,7 +135,24 @@ void Manager::addCategory() {
     categories.push_back(category);
 }
 
-void Manager::deleteCategory() {};
+void Manager::deleteCategory() {
+    for(int i = 0; i < categories.size(); i++)
+        categories[i].show();
+
+    int choice;
+    cout << "Wybierz numer kategorii, ktora chcesz usunac" << endl;
+    cin >> choice;
+
+    for(int i = 0; i < passwords.size(); i++){
+        if(passwords[i].getCategory().getIndex() == choice)
+            passwords.erase(std::next(passwords.begin(),i),std::next(passwords.begin(),i+1));
+    }
+
+    for(int i = 0; i < categories.size(); i++){
+        if(categories[i].getIndex() == choice)
+            categories.erase(std::next(categories.begin(), i), std::next(categories.begin(),i+1));
+    }
+};
 
 void Manager::deletePassword(Password password) {
     for(int i = 0; i <passwords.size(); i++){
