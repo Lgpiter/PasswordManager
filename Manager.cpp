@@ -1,10 +1,91 @@
 #include "Manager.h"
 #include "iostream"
 #include "vector"
+#include "string"
 
 using namespace std;
 
-void Manager::findPassword() {};
+//DZIALA
+void Manager::findPassword() {
+    char choice;
+    cout << "Podaj po jakim parametrze chcesz wyszukac hasel " << endl;
+    cout << "1 -> nazwa" << endl;
+    cout << "2 -> login" << endl;
+    cout << "3 -> haslo" << endl;
+    cout << "4 -> kategorie" << endl;
+    cout <<"Jesli chcesz wrocic do menu glownego wpisz dowolna litere" <<endl;
+    cin >> choice;
+
+    bool isFound = false;
+
+    switch (choice - '0') {
+        case 1 :{
+            string passwordName;
+            cout << "Podaj nazwe hasla jakie chcesz znalezc\n";
+
+            getline(std::cin,passwordName);//to catch endline
+            getline(std::cin,passwordName);
+
+            cout << passwordName << endl;
+            for(int i = 0; i < passwords.size(); i++){
+                if(passwords[i].getName().compare(passwordName) == 0) {
+                    isFound = true;
+                    passwords[i].show();
+                }
+            }
+            break;
+        }
+        case 2:{
+            string login;
+            cout << "Poda login hasla jakie chcesz znalezc" << endl;
+
+            getline(std::cin,login);//to catch endline
+            getline(std::cin,login);
+
+            for(int i = 0; i < passwords.size(); i++){
+                if(passwords[i].getLogin().compare(login) == 0) {
+                    isFound = true;
+                    passwords[i].show();
+                }
+            }
+            break;
+        }
+        case 3:{
+            string password;
+            cout << "Podaj haslo jakie chcesz znalezc" << endl;
+            getline(std::cin,password);//to catch endline
+            getline(std::cin,password);
+            for(int i = 0; i < passwords.size(); i++){
+                if(passwords[i].getPassword().compare(password) == 0) {
+                    isFound = true;
+                    passwords[i].show();
+                }
+            }
+            break;
+        }
+        case 4:{
+            string category;
+            cout << "Podaj kategorie hasla jakie chcesz znalezc" << endl;
+            cin >> category;
+            for(int i = 0; i < passwords.size(); i++){
+                if(passwords[i].getCategory().getName().compare(category)) {
+                    isFound = true;
+                    passwords[i].show();
+                }
+            }
+            break;
+        }
+        default:{
+            return;
+        }
+    }
+
+    if(!isFound){
+        cout << "Nie znaleziono zadnych hasel o powyzszych kryteriach" << endl;
+    }
+};
+
+
 void Manager::sortPasswords() {};
 
 
@@ -145,12 +226,12 @@ void Manager::deleteCategory() {
 
     for(int i = 0; i < passwords.size(); i++){
         if(passwords[i].getCategory().getIndex() == choice)
-            passwords.erase(std::next(passwords.begin(),i),std::next(passwords.begin(),i+1));
+            passwords.erase(passwords.begin() + i);
     }
 
     for(int i = 0; i < categories.size(); i++){
         if(categories[i].getIndex() == choice)
-            categories.erase(std::next(categories.begin(), i), std::next(categories.begin(),i+1));
+            categories.erase(categories.begin()+i);
     }
 };
 
@@ -211,52 +292,56 @@ std::string Manager::createPassword() {
     cin >> bigLetters;
     cout << "Czy chcesz by zawieralo znaki specjalne (y/n)" << endl;
     cin >> specialCharacters;
+
+    return ")";
 }
 
 void Manager::printMenu(){
-    int choice;
-    cout << "1.Wyszukaj hasla" << endl;
-    cout << "2.Posortuj hasla" << endl;
-    cout << "3.Dodaj haslo" << endl;
-    cout << "4.Edytuj haslo" << endl;
-    cout << "5.Usun haslo" << endl;
-    cout << "6.Dodaj kategorie" << endl;
-    cout << "7.Usun kategorie" << endl;
-    cout << "8.Zakoncz program" << endl;
-    cin >> choice;
+    char choice = 0;
 
-    switch (choice) {
-        case 1:{
-            findPassword();
-            break;
-        }
-        case 2:{
-            sortPasswords();
-            break;
-        }
-        case 4:{
-            editPassword();
-            break;
-        }
-        case 5:{
-            //deletePassword();
-            break;
-        }
-        case 6:{
-            addCategory();
-            break;
-        }
-        case 7:{
-            deleteCategory();
-            break;
-        }case 8:{
-            break;
-        }
-        default:{
-            cout << "Wybrales zly numer sprobuj jeszcze raz" << endl;
-            printMenu();
-        }
+    while (choice != 8) {
+        cout << "1.Wyszukaj hasla" << endl;
+        cout << "2.Posortuj hasla" << endl;
+        cout << "3.Dodaj haslo" << endl;
+        cout << "4.Edytuj haslo" << endl;
+        cout << "5.Usun haslo" << endl;
+        cout << "6.Dodaj kategorie" << endl;
+        cout << "7.Usun kategorie" << endl;
+        cout << "8.Zakoncz program" << endl;
+        cin >> choice;
 
+        switch (choice -'0') {
+            case 1: {
+                findPassword();
+                break;
+            }
+            case 2: {
+                sortPasswords();
+                break;
+            }
+            case 4: {
+                editPassword();
+                break;
+            }
+            case 5: {
+                //deletePassword();
+                break;
+            }
+            case 6: {
+                addCategory();
+                break;
+            }
+            case 7: {
+                deleteCategory();
+                break;
+            }
+            case 8: {
+                return;
+            }
+            default: {
+                cout << "Wybrales zly numer sprobuj jeszcze raz" << endl;
+            }
+        }
     }
 }
 

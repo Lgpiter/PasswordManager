@@ -14,6 +14,8 @@ class Category {
 public:
     Category(const std::string &name, int index);
 
+    const std::string &getName() const;
+
     int getIndex() const;
     void show();
 

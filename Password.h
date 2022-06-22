@@ -13,7 +13,11 @@ class Password {
 public:
     Password(const std::string &name, const std::string &password, const std::string &login, const Category &category);
 
+    const std::string &getName() const;
+
     const std::string &getPassword() const;
+
+    const std::string &getLogin() const;
 
     const Category &getCategory() const;
 

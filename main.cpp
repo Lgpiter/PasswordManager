@@ -17,16 +17,6 @@ int main() {
     hasla.push_back(password4);
 
     Manager manager {hasla};
-    std::string test1  = "test";
-    std::string test2  = "Test";
-    std::string test3 = "Test%";
-    std::string test4 = "Test%dsadjksandsaklda";
-    std::cout << manager.isSafe(test1)<<std::endl;
-    std::cout << manager.isSafe(test2)<<std::endl;
-    std::cout << manager.isSafe(test3)<<std::endl;
-    std::cout << manager.isSafe(test4)<<std::endl;
-
-    manager.editPassword();
-    manager.showPasswords();
+    manager.printMenu();
     return 0;
 }

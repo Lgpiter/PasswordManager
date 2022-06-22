@@ -15,3 +15,7 @@ std::ostream &operator<<(std::ostream &os, const Category &category) {
     os << "name: " << category.name << " index: " << category.index;
     return os;
 }
+
+const std::string &Category::getName() const {
+    return name;
+}

@@ -34,6 +34,14 @@ void Password::setCategory(const Category &category) {
     Password::category = category;
 }
 
+const std::string &Password::getName() const {
+    return name;
+}
+
+const std::string &Password::getLogin() const {
+    return login;
+}
+
 
 
 
