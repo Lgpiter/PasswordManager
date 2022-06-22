@@ -15,13 +15,18 @@ class Manager {
     std::vector <Category> categories;
 
 public:
-    Manager(const std::vector<Password> &passwords);
+    Manager(const std::vector<Password> &passwords, const std::vector<Category> &categories);
 
     void findPassword();
-    void sortPasswords();
+
+    void sortType();
+
+    template <typename functype1, typename funcType2>
+    void sortPasswords(functype1 f1,funcType2 f2);
+
     void addPassword();
     void editPassword();
-    void deletePassword(Password password);
+    void deletePassword();
     void addCategory();
     void deleteCategory();
     void showPasswords();

@@ -2,8 +2,13 @@
 #include "iostream"
 #include "vector"
 #include "string"
+#include "algorithm"
+#include "time.h"
 
 using namespace std;
+
+Manager::Manager(const vector<Password> &passwords, const vector<Category> &categories) : passwords(passwords),
+                                                                                          categories(categories) {}
 
 //DZIALA
 void Manager::findPassword() {
@@ -23,7 +28,7 @@ void Manager::findPassword() {
             string passwordName;
             cout << "Podaj nazwe hasla jakie chcesz znalezc\n";
 
-            getline(std::cin,passwordName);//to catch endline
+            cin.ignore();
             getline(std::cin,passwordName);
 
             cout << passwordName << endl;
@@ -39,7 +44,7 @@ void Manager::findPassword() {
             string login;
             cout << "Poda login hasla jakie chcesz znalezc" << endl;
 
-            getline(std::cin,login);//to catch endline
+            cin.ignore();
             getline(std::cin,login);
 
             for(int i = 0; i < passwords.size(); i++){
@@ -53,7 +58,7 @@ void Manager::findPassword() {
         case 3:{
             string password;
             cout << "Podaj haslo jakie chcesz znalezc" << endl;
-            getline(std::cin,password);//to catch endline
+            cin.ignore();
             getline(std::cin,password);
             for(int i = 0; i < passwords.size(); i++){
                 if(passwords[i].getPassword().compare(password) == 0) {
@@ -86,9 +91,129 @@ void Manager::findPassword() {
 };
 
 
-void Manager::sortPasswords() {};
+//DZIALA
+template <typename functype1, typename funcType2>
+void Manager::sortPasswords(functype1 f1,funcType2 f2) {
+    for (int i = 0; i < passwords.size(); i++){
+        for(int j = i+1; j < passwords.size(); j++){
+            if(f1(passwords[i],passwords[j]) < 0) {
+                cout << "WCHODZIMY TU?" << endl;
+                iter_swap(passwords.begin() + i, passwords.begin() + j);
+            }
+            else if(f1(passwords[i],passwords[j]) == 0){
+                if(f2(passwords[i],passwords[j]) < 0)
+                    iter_swap(passwords.begin() + i,passwords.begin() + j);
+            }
+
+        }
+    }
+
+    showPasswords();
+};
+void Manager::sortType() {
+    int choice1;
+    int choice2;
+    cout <<"Podaj po jakich kategoriach chcesz posortowac hasla " << endl;
+    cout << "1 -> nazwa" << endl;
+    cout << "2 -> login" << endl;
+    cout << "3 -> haslo" << endl;
+    cout << "4 -> kategorie" << endl;
+    cout <<"Kategoria 1 -> " << endl;
+    cin >> choice1;
+    cout << "Kategoria 2 ->" << endl;
+    cin >> choice2;
+
+    auto fName = [](Password& p1, Password& p2) -> int{
+        return p2.getName().compare(p1.getName());
+    };
+
+    auto fLogin = [](Password& p1, Password& p2) -> int{
+        return p2.getLogin().compare(p1.getLogin());
+    };
+
+    auto fPassword = [](Password& p1, Password& p2) -> int{
+        return p2.getPassword().compare(p1.getPassword());
+    };
+
+    auto fCategory = [](Password& p1, Password& p2) -> int{
+        return p2.getCategory().getName().compare(p1.getCategory().getName());
+    };
+
+    switch (choice1) {
+        case 1:{
+            switch (choice2) {
+                case 2:{
+                    sortPasswords(fName,fLogin);
+                    break;
+                }
+                case 3:{
+                    sortPasswords(fName,fPassword);
+                    break;
+                }
+                case 4:{
+                    sortPasswords(fName,fCategory);
+                    break;
+                }
+            }
+            break;
+        }
+        case 2:{
+            switch (choice2) {
+                case 1:{
+                    sortPasswords(fLogin,fName);
+                    break;
+                }
+                case 3:{
+                    sortPasswords(fLogin,fPassword);
+                    break;
+                }
+                case 4:{
+                    sortPasswords(fLogin,fCategory);
+                    break;
+                }
+            }
+            break;
+        }
+        case 3:{
+            switch (choice2) {
+                case 1:{
+                    sortPasswords(fPassword,fName);
+                    break;
+                }
+                case 2:{
+                    sortPasswords(fPassword,fLogin);
+                    break;
+                }
+                case 4:{
+                    sortPasswords(fPassword,fCategory);
+                    break;
+                }
+            }
+            break;
+        }
+        case 4:{
+            switch (choice2) {
+                case 1:{
+                    sortPasswords(fCategory,fName);
+                    break;
+                }
+                case 2:{
+                    sortPasswords(fCategory,fLogin);
+                    break;
+                }
+                case 3:{
+                    sortPasswords(fCategory,fPassword);
+                    break;
+                }
+            }
+            break;
+        }
+        
+    }
+}
 
 
+//DZIALA
 void Manager::editPassword() {
     for(int i = 0; i < passwords.size(); i++){
         cout << i + 1 << ".";
@@ -114,7 +239,8 @@ void Manager::editPassword() {
         case 1:{
             string name;
             cout << "Podaj nazwe na jaka chcesz zmienic" << endl;
-            cin >> name;
+            cin.ignore();
+            getline(cin,name);
             passwords[choice -1].setName(name);
             break;
         }
@@ -151,11 +277,13 @@ void Manager::addPassword() {
     string name;
     string login;
     cout << "Podaj nazwe ktore chcasz nadac nowemu haslu" << std::endl;
-    cin >> name;
+    cin.ignore();
+    getline(cin,name);
     cout << "Podaj login dopasowany do tego hasla" << std::endl;
-    cin >> login;
+    cin.ignore();
+    getline(cin,login);
 
-    int pom = 0;
+    int pom = 0; //condition to our while
     int choice;
 
     string password;
@@ -164,7 +292,7 @@ void Manager::addPassword() {
         cout <<"Jesli masz gotowe haslo wpisz 1, a jesli wygenerowac Ci haslo wpisz 0" << endl;
         cin >> choice;
         if(choice == 0){
-            cout << "Kod do generowania hasla";
+            password = createPassword();
             pom = 1;
         }
         else if (choice == 1){
@@ -186,8 +314,6 @@ void Manager::addPassword() {
                     cout << "bardzo mocne" << endl;
                 }
             }
-
-
             pom = 1;
         }
     }
@@ -206,16 +332,19 @@ void Manager::addPassword() {
     }
 }
 
+//dziala
 void Manager::addCategory() {
     string name;
     cout << "Podaj nazwe kategori, ktora chcesz stowrzyc " << endl;
-    cin >> name;
+    cin.ignore();
+    getline(cin,name);
 
     int size = categories.size() + 1;
     Category category {name, size};
     categories.push_back(category);
 }
 
+//dziala
 void Manager::deleteCategory() {
     for(int i = 0; i < categories.size(); i++)
         categories[i].show();
@@ -225,27 +354,42 @@ void Manager::deleteCategory() {
     cin >> choice;
 
     for(int i = 0; i < passwords.size(); i++){
-        if(passwords[i].getCategory().getIndex() == choice)
+        if(passwords[i].getCategory().getIndex() == choice) {
             passwords.erase(passwords.begin() + i);
+            i--; //zeby nie przeskakiwac elementow
+        }
     }
 
     for(int i = 0; i < categories.size(); i++){
         if(categories[i].getIndex() == choice)
             categories.erase(categories.begin()+i);
     }
+
+    showPasswords();
 };
 
-void Manager::deletePassword(Password password) {
-    for(int i = 0; i <passwords.size(); i++){
-        if(passwords[i].getPassword() == password.getPassword())
-            passwords.erase(std::next(passwords.begin(),i),std::next(passwords.begin(),i+1));
+//dziala
+void Manager::deletePassword() {
+    int choice;
+
+    showPasswords();
+    cout << "Wybierz haslo, ktore chcesz usunac (jesli chcesz skonczyc wpisz 0)" << endl;
+    cin >> choice;
+    if(choice == 0)
+        return;
+    else {
+        cout << "Jestes pewien, ze chcesz usunac to haslo? (jesli tak wpisz 1)" << endl;
+        cin >>choice;
+        if(choice == 1) {
+            passwords.erase(passwords.begin() + choice - 1);
+            deletePassword();
+        }
     }
 }
 
-Manager::Manager(const vector<Password> &passwords) : passwords(passwords) {}
-
 void Manager::showPasswords() {
     for(int i = 0; i < passwords.size(); i++){
+        cout << i+1 <<".";
         passwords[i].show();
     }
 }
@@ -293,7 +437,34 @@ std::string Manager::createPassword() {
     cout << "Czy chcesz by zawieralo znaki specjalne (y/n)" << endl;
     cin >> specialCharacters;
 
-    return ")";
+    string password = "";
+    char character;
+    int random;
+
+    string special = "!@#$%^&*(){}[]|:;'<>?,./";
+
+    srand(time(NULL));
+    for(int i = 0; i < length; i++){
+        if(i%3 == 0 && specialCharacters == 'y'){
+            //co 3 znak bedzie znakiem specjalnym
+            random = rand() % special.length();
+            character = special[random];
+        }
+        else if(i % 2 == 0 && bigLetters == 'y'){
+            //co 2 znak wielka litera
+            random = rand()%26;
+            character = 'A' + random;
+        }
+        else {
+            random = rand()%26;
+            character = 'a' + random;
+        }
+
+        password += character;
+    }
+
+    cout<<password << endl;
+    return password;
 }
 
 void Manager::printMenu(){
@@ -316,7 +487,11 @@ void Manager::printMenu(){
                 break;
             }
             case 2: {
-                sortPasswords();
+                sortType();
+                break;
+            }
+            case 3: {
+                addPassword();
                 break;
             }
             case 4: {
@@ -324,7 +499,7 @@ void Manager::printMenu(){
                 break;
             }
             case 5: {
-                //deletePassword();
+                deletePassword();
                 break;
             }
             case 6: {
