@@ -24,7 +24,9 @@ public:
     void deleteCategory();
     void showPasswords();
 
+    void printMenu();
     int isSafe(std::string password);
+    std::string createPassword();
 };
 
 

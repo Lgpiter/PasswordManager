@@ -4,8 +4,11 @@
 
 using namespace std;
 
+void Manager::findPassword() {};
+void Manager::sortPasswords() {};
+void Manager::editPassword() {};
+
 void Manager::addPassword() {
-    /*
     string name;
     string login;
     cout << "Podaj nazwe ktore chcasz nadac nowemu haslu" << std::endl;
@@ -13,9 +16,10 @@ void Manager::addPassword() {
     cout << "Podaj login dopasowany do tego hasla" << std::endl;
     cin >> login;
 
-    */
     int pom = 0;
     int choice;
+
+    string password;
 
     while(pom == 0){
         cout <<"Jesli masz gotowe haslo wpisz 1, a jesli wygenerowac Ci haslo wpisz 0" << endl;
@@ -25,7 +29,6 @@ void Manager::addPassword() {
             pom = 1;
         }
         else if (choice == 1){
-            string password;
             cout << "Podaj swoje haslo";
             cin >>password;
             cout << "Sila Twojego hasla to: ";
@@ -43,14 +46,24 @@ void Manager::addPassword() {
                 case 3:{
                     cout << "bardzo mocne" << endl;
                 }
-
             }
 
 
             pom = 1;
         }
     }
+
+    int category;
+
+    cout << "Wybierz kategorie, do ktorej chcesz dodac haslo" << std::endl;
+    cin >> category;
+
+    Password tmp {name,password,login,category};
+    passwords.push_back(tmp);
 }
+void Manager::deleteCategory() {};
+
+
 
 
 void Manager::deletePassword(Password password) {
@@ -68,6 +81,7 @@ void Manager::showPasswords() {
     }
 }
 
+//funkcja dziala
 int Manager::isSafe(std::string password) {
     //to check if all parameters are fine
     int counter = 0;
@@ -97,6 +111,65 @@ int Manager::isSafe(std::string password) {
         counter++;
 
     return counter;
+}
+
+std::string Manager::createPassword() {
+    int length;
+    char bigLetters;
+    char specialCharacters;
+    cout << "Podaj dlugosc hasla" << endl;
+    cin >> length;
+    cout << "Czy chcesz by zawieralo duze litery (y/n)" << endl;
+    cin >> bigLetters;
+    cout << "Czy chcesz by zawieralo znaki specjalne (y/n)" << endl;
+    cin >> specialCharacters;
+}
+
+void Manager::printMenu(){
+    int choice;
+    cout << "1.Wyszukaj hasla" << endl;
+    cout << "2.Posortuj hasla" << endl;
+    cout << "3.Dodaj haslo" << endl;
+    cout << "4.Edytuj haslo" << endl;
+    cout << "5.Usun haslo" << endl;
+    cout << "6.Dodaj kategorie" << endl;
+    cout << "7.Usun kategorie" << endl;
+    cout << "8.Zakoncz program" << endl;
+    cin >> choice;
+
+    switch (choice) {
+        case 1:{
+            findPassword();
+            break;
+        }
+        case 2:{
+            sortPasswords();
+            break;
+        }
+        case 4:{
+            editPassword();
+            break;
+        }
+        case 5:{
+            //deletePassword();
+            break;
+        }
+        case 6:{
+            addCategory();
+            break;
+        }
+        case 7:{
+            deleteCategory();
+            break;
+        }case 8:{
+            break;
+        }
+        default:{
+            cout << "Wybrales zly numer sprobuj jeszcze raz" << endl;
+            printMenu();
+        }
+
+    }
 }
 
 
