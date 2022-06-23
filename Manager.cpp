@@ -4,6 +4,7 @@
 #include "string"
 #include "algorithm"
 #include <ctime>
+#include <fstream>
 
 using namespace std;
 
@@ -520,4 +521,21 @@ void Manager::printMenu(){
     }
 }
 
+void Manager::writeToFile() {
+    ofstream outdata;
+
+
+
+    outdata.open("C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\test.txt");
+    outdata << "Categories" << endl;
+    for (auto &category : categories)
+        outdata << category << endl;
+
+    outdata << "Passwords" << endl;
+    for (auto & password : passwords)
+        outdata << password << endl;
+    outdata.close();
+
+    cout <<"DZIALA TO? XD";
+}
 

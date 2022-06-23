@@ -2,6 +2,8 @@
 #include "vector"
 #include "Manager.h"
 #include "Password.h"
+#include "fstream"
+void readPassword(std::vector<Category> &v);
 
 int main() {
     Category category1 {"Pierwsza",1};
@@ -16,15 +18,19 @@ int main() {
     Password password4 {"Do google4","haslo4", "12", category1};
     Password password5 {"A","haslo4", "12", category2};
 
+    /*
     password5.codePassword(true);
     password1.codePassword(true);
     password2.codePassword(true);
 
+
     std::cout << "PRZERWA" << std::endl;
 
+    /*
     password5.decodePassword(true);
     password1.decodePassword(true);
     password2.decodePassword(false);
+     */
     std::vector<Password> hasla;
     hasla.push_back(password1);
     hasla.push_back(password2);
@@ -32,7 +38,11 @@ int main() {
     hasla.push_back(password4);
     hasla.push_back(password5);
 
-    //Manager manager {hasla,kategorie};
-    //manager.printMenu();
+    Manager manager {hasla,kategorie};
+    manager.writeToFile();
     return 0;
+}
+
+void readPassword(std::vector<Category> &v){
+    std::ifstream fileInput;
 }

@@ -2,6 +2,7 @@
 #define PASSWORDMANAGER_PASSWORD_H
 
 #include <string>
+#include <ostream>
 #include "Category.h"
 
 class Password {
@@ -9,6 +10,7 @@ class Password {
     std::string password;
     std::string login;
     Category category;
+    static bool goodKey;
 
 public:
     Password(const std::string &name, const std::string &password, const std::string &login, const Category &category);
@@ -33,6 +35,8 @@ public:
 
     void codePassword(bool goodKey);
     void decodePassword(bool goodKey);
+
+    friend std::ostream &operator<<(std::ostream &os, const Password &password);
 };
 
 

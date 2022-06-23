@@ -1,0 +1,9 @@
+Categories
+name: Pierwsza index: 1
+name: Druga index: 2
+Passwords
+name: Do google1 password: haslo1 login: 12345 category: name: Pierwsza index: 1
+name: Do google2 password: haslo2 login: 1234 category: name: Pierwsza index: 1
+name: Do google3 password: haslo3 login: 123 category: name: Pierwsza index: 1
+name: Do google4 password: haslo4 login: 12 category: name: Pierwsza index: 1
+name: A password: haslo4 login: 12 category: name: Druga index: 2

@@ -75,6 +75,14 @@ void Password::decodePassword(bool goodKey) {
     std::cout << normalPasswrod << std::endl;
 }
 
+std::ostream &operator<<(std::ostream &os, const Password &password) {
+    os << "name: " << password.name << " password: " << password.password << " login: " << password.login
+       << " category: " << password.category;
+    return os;
+}
+
+
+
 
 
 

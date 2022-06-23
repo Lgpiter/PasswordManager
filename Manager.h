@@ -31,6 +31,8 @@ public:
     void deleteCategory();
     void showPasswords();
 
+    void writeToFile();
+
     void printMenu();
     static int isSafe(const std::string& password);
     static std::string createPassword();
