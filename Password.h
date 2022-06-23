@@ -31,8 +31,8 @@ public:
 
     void show();
 
-    void codePassword();
-    void decodePassword();
+    void codePassword(bool goodKey);
+    void decodePassword(bool goodKey);
 };
 
 

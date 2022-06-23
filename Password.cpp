@@ -42,12 +42,16 @@ const std::string &Password::getLogin() const {
     return login;
 }
 
-void Password::codePassword() {
+void Password::codePassword(bool goodKey) {
     std::string code = "";
     int pom;
 
     for(int i = 0; i < password.length(); i++){
-        pom = password[i] + 135;
+        if (goodKey)
+            pom = password[i] + 135;
+        else
+            pom = password[i] + 75;
+
         code += pom;
     }
 
@@ -55,12 +59,16 @@ void Password::codePassword() {
     password = code;
 }
 
-void Password::decodePassword() {
+void Password::decodePassword(bool goodKey) {
     std::string normalPasswrod="";
     int pom;
 
     for(int i = 0; i < password.length(); i++){
-        pom = password[i] - 135;
+        if (goodKey)
+            pom = password[i] - 135;
+        else
+            pom = password[i] - 75;
+
         normalPasswrod += pom;
     }
 
