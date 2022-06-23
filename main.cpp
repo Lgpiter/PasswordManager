@@ -16,6 +16,15 @@ int main() {
     Password password4 {"Do google4","haslo4", "12", category1};
     Password password5 {"A","haslo4", "12", category2};
 
+    password5.codePassword();
+    password1.codePassword();
+    password2.codePassword();
+
+    std::cout << "PRZERWA" << std::endl;
+
+    password5.decodePassword();
+    password1.decodePassword();
+    password2.decodePassword();
     std::vector<Password> hasla;
     hasla.push_back(password1);
     hasla.push_back(password2);
@@ -23,7 +32,7 @@ int main() {
     hasla.push_back(password4);
     hasla.push_back(password5);
 
-    Manager manager {hasla,kategorie};
-    manager.printMenu();
+    //Manager manager {hasla,kategorie};
+    //manager.printMenu();
     return 0;
 }

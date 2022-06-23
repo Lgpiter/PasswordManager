@@ -30,6 +30,9 @@ public:
     void setCategory(const Category &category);
 
     void show();
+
+    void codePassword();
+    void decodePassword();
 };
 
 

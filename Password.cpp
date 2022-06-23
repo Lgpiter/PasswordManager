@@ -42,6 +42,30 @@ const std::string &Password::getLogin() const {
     return login;
 }
 
+void Password::codePassword() {
+    std::string code = "";
+    int pom;
+
+    for(int i = 0; i < password.length(); i++){
+        pom = password[i] + 135;
+        code += pom;
+    }
+
+    std::cout<<code << std::endl;
+    password = code;
+}
+
+void Password::decodePassword() {
+    std::string normalPasswrod="";
+    int pom;
+
+    for(int i = 0; i < password.length(); i++){
+        pom = password[i] - 135;
+        normalPasswrod += pom;
+    }
+
+    std::cout << normalPasswrod << std::endl;
+}
 
 
 
