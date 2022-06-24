@@ -13,7 +13,8 @@ class Password {
     bool goodKey;
 
 public:
-    Password(const std::string &name, const std::string &password, const std::string &login, const Category &category);
+    Password(const std::string &name, const std::string &password, const std::string &login, const Category &category,
+             bool goodKey);
 
     const std::string &getName() const;
 

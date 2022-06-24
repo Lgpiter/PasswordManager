@@ -1,6 +1,9 @@
 #include "Password.h"
 #include "iostream"
 
+Password::Password(const std::string &name, const std::string &password, const std::string &login,
+                   const Category &category, bool goodKey) : name(name), password(password), login(login),
+                                                             category(category), goodKey(goodKey) {}
 
 
 void Password::show() {
@@ -11,8 +14,7 @@ const std::string &Password::getPassword() const {
     return password;
 }
 
-Password::Password(const std::string &name, const std::string &password, const std::string &login,
-                   const Category &category) : name(name), password(password), login(login), category(category) {}
+
 
 const Category &Password::getCategory() const {
     return category;
@@ -80,6 +82,7 @@ std::ostream &operator<<(std::ostream &os, const Password &password) {
        << " category: " << password.category;
     return os;
 }
+
 
 
 

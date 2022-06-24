@@ -326,7 +326,7 @@ void Manager::addPassword() {
 
     for(auto & categorie : categories){
         if(categoryChoice == categorie.getIndex()){
-            Password tmp {name,password,login,categorie};
+            Password tmp {name,password,login,categorie, true};
             passwords.push_back(tmp);
             break;
         }
@@ -524,16 +524,12 @@ void Manager::printMenu(){
 void Manager::writeToFile() {
     ofstream outdata;
 
-
-
     outdata.open("C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\test.txt");
-    outdata << "Categories" << endl;
     for (auto &category : categories)
-        outdata << category << endl;
+        outdata <<"Category: " <<  category << endl;
 
-    outdata << "Passwords" << endl;
     for (auto & password : passwords)
-        outdata << password << endl;
+        outdata <<"Password: " << password << endl;
     outdata.close();
 
 }
