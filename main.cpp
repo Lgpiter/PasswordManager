@@ -3,6 +3,8 @@
 #include "Manager.h"
 #include "Password.h"
 #include "fstream"
+
+bool checkIsGoodKey(std::string &s);
 void readPassword(std::vector<Category> &v);
 
 int main() {
@@ -17,6 +19,7 @@ int main() {
     Password password3 {"Do google3","haslo3", "123", category1};
     Password password4 {"Do google4","haslo4", "12", category1};
     Password password5 {"A","haslo4", "12", category2};
+
 
     /*
     password5.codePassword(true);
@@ -40,8 +43,34 @@ int main() {
 
     Manager manager {hasla,kategorie};
     manager.writeToFile();
+
+    std::string key;
+    std :: cout << "Wpisz haslo do pliku" << std::endl;
+    std::cin >> key;
+    bool mainKey = checkIsGoodKey(key);
+
     return 0;
 }
+
+bool checkIsGoodKey(std::string &s){
+    std::string orginalKey;
+
+    std::ifstream fileInput;
+    std::string fileName = "C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\wejscie.txt";
+    fileInput.open(fileName);
+
+    std::getline(fileInput,orginalKey);
+    fileInput.close();
+    std::cout << orginalKey << std::endl;
+
+    if(orginalKey== s) {
+        return true;
+    }
+    else
+        return false;
+
+}
+
 
 void readPassword(std::vector<Category> &v){
     std::ifstream fileInput;

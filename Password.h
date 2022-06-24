@@ -10,7 +10,7 @@ class Password {
     std::string password;
     std::string login;
     Category category;
-    static bool goodKey;
+    bool goodKey;
 
 public:
     Password(const std::string &name, const std::string &password, const std::string &login, const Category &category);

@@ -536,6 +536,5 @@ void Manager::writeToFile() {
         outdata << password << endl;
     outdata.close();
 
-    cout <<"DZIALA TO? XD";
 }
 
