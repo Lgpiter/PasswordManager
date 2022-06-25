@@ -7,6 +7,7 @@
 bool checkIsGoodKey(std::string &s);
 void readCategories(std::vector<Category> &v);
 void readPassword(std::vector<Password> &v1,std::vector<Category> &v2, bool &mainKey);
+void readListTimeStamp(std::string &timeStamp);
 
 int main() {    /*
     password5.codePassword(true);
@@ -65,15 +66,19 @@ int main() {    /*
 
     bool mainKey = checkIsGoodKey(key);
 
+    std::string timeStamp;
+
 
     std::vector<Category> categories;
    readCategories(categories);
 
     if(mainKey){
+        readListTimeStamp(timeStamp);
+
         std::vector<Password> passwords;
         readPassword(passwords,categories, mainKey);
 
-        Manager manager {passwords,categories};
+        Manager manager {passwords,categories,timeStamp};
         manager.printMenu();
     }
     else{
@@ -158,19 +163,41 @@ void readPassword(std::vector<Password> &v1,std::vector<Category> &v2, bool &mai
     std :: string pom;
 
     while(fileInput >> pom){
-        {
-
            // std:: cout << pom<<"Name: " << name<<"Pass: " << password <<"Login: "<<login <<"Category: " << category <<"INDEX: " << categoryIndex;
-            if(pom == "Password:"){
-                fileInput >> name>> password >> login >> category >> categoryIndex;
-                for(auto & i : v2){
-                    if(i.getIndex() == categoryIndex){
-                        Password tmp {name,password,login,i,mainKey};
+            if(pom == "Password:") {
+                fileInput >> name >> password >> login >> category >> categoryIndex;
+                for (auto &i: v2) {
+                    if (i.getIndex() == categoryIndex) {
+                        Password tmp{name, password, login, i, mainKey};
                         tmp.decodePassword();
                         v1.push_back(tmp);
                     }
                 }
             }
-        }
     }
+}
+
+void readListTimeStamp(std::string &timeStamp){
+   std::vector<std::string> lines;
+   std:: string line;
+
+    std::ifstream fileInput;
+    std::string fileName = "C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\test.txt";
+    fileInput.open(fileName);
+
+    while (getline(fileInput, line)){
+        lines.push_back(line);
+    }
+
+    std::string pom = lines[lines.size() -1];
+
+    //to encode timestamp
+    for(char & i : pom){
+        i -= 45;
+    }
+
+    timeStamp = pom;
+
+    fileInput.close();
+
 }

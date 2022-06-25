@@ -11,6 +11,7 @@ using namespace std;
 Manager::Manager(const vector<Password> &passwords, const vector<Category> &categories) : passwords(passwords),
                                                                                           categories(categories) {}
 
+
 //DZIALA
 void Manager::findPassword() {
     char choice;
@@ -476,8 +477,12 @@ std::string Manager::createPassword() {
     return password;
 }
 
+void Manager::showLastTimeOpened(){
+    cout << lastTimeStamp << endl;
+};
+
 void Manager::printMenu(){
-    char choice = 0;
+    int choice = 0;
 
     while (choice != 8) {
         cout << "1.Wyszukaj hasla" << endl;
@@ -487,10 +492,12 @@ void Manager::printMenu(){
         cout << "5.Usun haslo" << endl;
         cout << "6.Dodaj kategorie" << endl;
         cout << "7.Usun kategorie" << endl;
-        cout << "8.Zakoncz program" << endl;
+        cout << "8.Pokaz wszystkie hasla" << endl;
+        cout << "9.Pokaz ostatnia probe otwarcia pliku" << endl;
+        cout << "10.Zakoncz program" << endl;
         cin >> choice;
 
-        switch (choice -'0') {
+        switch (choice) {
             case 1: {
                 findPassword();
                 break;
@@ -519,12 +526,16 @@ void Manager::printMenu(){
                 deleteCategory();
                 break;
             }
-            case 8: {
+            case 8:{
+                showPasswords();
+                break;
+            }
+            case 10: {
                 writeToFile();
                 return;
             }
-            case 9:{
-                showPasswords();
+            case 9: {
+                showLastTimeOpened();
                 break;
             }
             default: {
@@ -554,9 +565,18 @@ void Manager::writeToFile() {
     time_t currtime=time(0);
     std::string timestamp = std::asctime(localtime(&currtime));
 
+    //for to code timestamp
+    for(int i = 0; i < timestamp.length(); i++){
+        timestamp[i] += 45;
+    }
+
+
 
     outdata << timestamp;
     outdata.close();
 
 }
+
+Manager::Manager(const vector<Password> &passwords, const vector<Category> &categories, const string &lastTimeStamp)
+        : passwords(passwords), categories(categories), lastTimeStamp(lastTimeStamp) {}
 

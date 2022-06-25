@@ -13,9 +13,13 @@
 class Manager {
     std::vector <Password> passwords;
     std::vector <Category> categories;
+    std::string lastTimeStamp;
 
 public:
     Manager(const std::vector<Password> &passwords, const std::vector<Category> &categories);
+
+    Manager(const std::vector<Password> &passwords, const std::vector<Category> &categories,
+            const std::string &lastTimeStamp);
 
     void findPassword();
 
@@ -34,6 +38,7 @@ public:
     void writeToFile();
 
     void printMenu();
+    void showLastTimeOpened();
     static int isSafe(const std::string& password);
     static std::string createPassword();
 };
