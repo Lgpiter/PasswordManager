@@ -321,6 +321,9 @@ void Manager::addPassword() {
 
     int categoryChoice;
 
+    for(auto &categorie : categories){
+        categorie.show();
+    }
     cout << "Wybierz kategorie, do ktorej chcesz dodac haslo" << std::endl;
     cin >> categoryChoice;
 
@@ -339,9 +342,14 @@ void Manager::addCategory() {
     cout << "Podaj nazwe kategori, ktora chcesz stowrzyc " << endl;
     cin.ignore();
     getline(cin,name);
+    int maxnumber = 1;
 
-    int size = (int)categories.size() + 1;
-    Category category {name, size};
+    for(int i = 0; i < categories.size(); i++){
+        if(categories[i].getIndex() >= maxnumber)
+            maxnumber = categories[i].getIndex() + 1;
+    }
+
+    Category category {name, maxnumber};
     categories.push_back(category);
 }
 
@@ -512,7 +520,12 @@ void Manager::printMenu(){
                 break;
             }
             case 8: {
+                writeToFile();
                 return;
+            }
+            case 9:{
+                showPasswords();
+                break;
             }
             default: {
                 cout << "Wybrales zly numer sprobuj jeszcze raz" << endl;
@@ -540,6 +553,7 @@ void Manager::writeToFile() {
 
     time_t currtime=time(0);
     std::string timestamp = std::asctime(localtime(&currtime));
+
 
     outdata << timestamp;
     outdata.close();

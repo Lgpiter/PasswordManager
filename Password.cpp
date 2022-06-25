@@ -57,7 +57,6 @@ void Password::codePassword() {
         code += pom;
     }
 
-    std::cout<<code << std::endl;
     password = code;
 }
 

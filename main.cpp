@@ -68,14 +68,30 @@ int main() {    /*
 
     std::vector<Category> categories;
    readCategories(categories);
-   for(int i = 0; i < categories.size(); i++)
-       categories[i].show();
 
+    if(mainKey){
+        std::vector<Password> passwords;
+        readPassword(passwords,categories, mainKey);
+
+        Manager manager {passwords,categories};
+        manager.printMenu();
+    }
+    else{
+        std::vector<Password> passwords;
+        readPassword(passwords,categories, mainKey);
+
+        Manager manager {passwords,categories};
+        manager.showPasswords();
+        manager.writeToFile();
+    }
+    /*
    std::vector<Password> passwords;
     readPassword(passwords,categories, mainKey);
 
     Manager manager {passwords,categories};
     manager.showPasswords();
+    manager.printMenu();
+     */
 
     return 0;
 }
@@ -97,10 +113,7 @@ bool checkIsGoodKey(std::string &s){
         orginalKey[i] = pom;
     }
 
-    std::cout << orginalKey << std::endl;
-
     if(orginalKey== s) {
-        std::cout << "true?" << std::endl;
         return true;
     }
     else
@@ -144,9 +157,12 @@ void readPassword(std::vector<Password> &v1,std::vector<Category> &v2, bool &mai
     int categoryIndex;
     std :: string pom;
 
-    while(fileInput >> pom>> name>> password >> login >> category >> categoryIndex){
+    while(fileInput >> pom){
         {
+
+           // std:: cout << pom<<"Name: " << name<<"Pass: " << password <<"Login: "<<login <<"Category: " << category <<"INDEX: " << categoryIndex;
             if(pom == "Password:"){
+                fileInput >> name>> password >> login >> category >> categoryIndex;
                 for(auto & i : v2){
                     if(i.getIndex() == categoryIndex){
                         Password tmp {name,password,login,i,mainKey};
