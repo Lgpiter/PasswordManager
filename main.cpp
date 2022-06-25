@@ -6,7 +6,7 @@
 
 bool checkIsGoodKey(std::string &s);
 void readCategories(std::vector<Category> &v);
-void readPassword(std::vector<Password> &v);
+void readPassword(std::vector<Password> &v1,std::vector<Category> &v2, bool &mainKey);
 
 int main() {    /*
     password5.codePassword(true);
@@ -26,8 +26,11 @@ int main() {    /*
     std::string key;
     std :: cout << "Wpisz haslo do pliku" << std::endl;
     std::cin >> key;
-    bool mainKey = checkIsGoodKey(key);
+
      */
+
+
+
 
     /*
     bool mainKey = true;
@@ -38,10 +41,10 @@ int main() {    /*
     kategorie.push_back(category1);
     kategorie.push_back(category2);
 
-    Password password1 {"Do google1","haslo1", "12345", category1,mainKey};
-    Password password2 {"Do google2","haslo2", "1234", category1,mainKey};
-    Password password3 {"Do google3","haslo3", "123", category1,mainKey};
-    Password password4 {"Do google4","haslo4", "12", category1,mainKey};
+    Password password1 {"Do_google1","haslo1", "12345", category1,mainKey};
+    Password password2 {"Do_google2","haslo2", "1234", category1,mainKey};
+    Password password3 {"Do_google3","haslo3", "123", category1,mainKey};
+    Password password4 {"Do_google4","haslo4", "12", category1,mainKey};
     Password password5 {"A","haslo4", "12", category2,mainKey};
 
     std::vector<Password> hasla;
@@ -53,13 +56,26 @@ int main() {    /*
 
     Manager manager {hasla,kategorie};
     manager.writeToFile();
-    */
+     */
+
+
+    std::string key;
+    std :: cout << "Wpisz haslo do pliku" << std::endl;
+    std::cin >> key;
+
+    bool mainKey = checkIsGoodKey(key);
 
 
     std::vector<Category> categories;
    readCategories(categories);
    for(int i = 0; i < categories.size(); i++)
        categories[i].show();
+
+   std::vector<Password> passwords;
+    readPassword(passwords,categories, mainKey);
+
+    Manager manager {passwords,categories};
+    manager.showPasswords();
 
     return 0;
 }
@@ -68,19 +84,27 @@ bool checkIsGoodKey(std::string &s){
     std::string orginalKey;
 
     std::ifstream fileInput;
-    std::string fileName = "C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\wejscie.txt";
-    fileInput.open(fileName);
+    std::string fileName = "C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\test.txt";
 
+    fileInput.open(fileName);
     std::getline(fileInput,orginalKey);
     fileInput.close();
+
+
+    int pom;
+    for(int i = 0; i < orginalKey.size(); i++){
+        pom = orginalKey[i] - 135;
+        orginalKey[i] = pom;
+    }
+
     std::cout << orginalKey << std::endl;
 
     if(orginalKey== s) {
+        std::cout << "true?" << std::endl;
         return true;
     }
     else
         return false;
-
 }
 
 void readCategories(std::vector<Category> &v){
@@ -89,22 +113,48 @@ void readCategories(std::vector<Category> &v){
     fileInput.open(fileName);
 
     std::string line;
+    std::getline(fileInput,line);
 
     std :: string name;
     std :: string category;
     int index;
 
-    while(fileInput >> category>> name>> index){
-        {
+    while(fileInput >> category >> name>> index){
             if(category == "Category:"){
                 Category tmp {name,index};
                 v.push_back(tmp);
             }
-        }
     }
+
+    fileInput.close();
 }
 
-
-void readPassword(std::vector<Password> &v){
+void readPassword(std::vector<Password> &v1,std::vector<Category> &v2, bool &mainKey){
     std::ifstream fileInput;
+    std::string fileName = "C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\test.txt";
+    fileInput.open(fileName);
+
+    std::string line;
+    std::getline(fileInput,line);
+
+    std :: string name;
+    std :: string password;
+    std :: string login;
+    std :: string category;
+    int categoryIndex;
+    std :: string pom;
+
+    while(fileInput >> pom>> name>> password >> login >> category >> categoryIndex){
+        {
+            if(pom == "Password:"){
+                for(auto & i : v2){
+                    if(i.getIndex() == categoryIndex){
+                        Password tmp {name,password,login,i,mainKey};
+                        tmp.decodePassword();
+                        v1.push_back(tmp);
+                    }
+                }
+            }
+        }
+    }
 }

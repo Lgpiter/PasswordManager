@@ -111,6 +111,7 @@ void Manager::sortPasswords(functype1 f1,funcType2 f2) {
 
     showPasswords();
 }
+
 void Manager::sortType() {
     int choice1;
     int choice2;
@@ -212,7 +213,6 @@ void Manager::sortType() {
         
     }
 }
-
 
 //DZIALA
 void Manager::editPassword() {
@@ -525,11 +525,23 @@ void Manager::writeToFile() {
     ofstream outdata;
 
     outdata.open("C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\test.txt");
+
+    Password p  {"test","test1234","12344341",categories[1],true};
+    p.codePassword();
+    outdata << p.getPassword() << endl;
+
     for (auto &category : categories)
         outdata <<"Category: " <<  category << endl;
 
-    for (auto & password : passwords)
-        outdata <<"Password: " << password << endl;
+    for (auto & password : passwords) {
+        password.codePassword();
+        outdata << "Password: " << password << endl;
+    }
+
+    time_t currtime=time(0);
+    std::string timestamp = std::asctime(localtime(&currtime));
+
+    outdata << timestamp;
     outdata.close();
 
 }

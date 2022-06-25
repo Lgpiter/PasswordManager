@@ -44,7 +44,7 @@ const std::string &Password::getLogin() const {
     return login;
 }
 
-void Password::codePassword(bool goodKey) {
+void Password::codePassword() {
     std::string code = "";
     int pom;
 
@@ -61,7 +61,7 @@ void Password::codePassword(bool goodKey) {
     password = code;
 }
 
-void Password::decodePassword(bool goodKey) {
+void Password::decodePassword() {
     std::string normalPasswrod="";
     int pom;
 
@@ -74,12 +74,12 @@ void Password::decodePassword(bool goodKey) {
         normalPasswrod += pom;
     }
 
-    std::cout << normalPasswrod << std::endl;
+    password = normalPasswrod;
 }
 
 std::ostream &operator<<(std::ostream &os, const Password &password) {
-    os << "name: " << password.name << " password: " << password.password << " login: " << password.login
-       << " category: " << password.category;
+    os << password.name << " " << password.password << " " << password.login
+       << " " << password.category;
     return os;
 }
 

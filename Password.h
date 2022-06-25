@@ -34,8 +34,8 @@ public:
 
     void show();
 
-    void codePassword(bool goodKey);
-    void decodePassword(bool goodKey);
+    void codePassword();
+    void decodePassword();
 
     friend std::ostream &operator<<(std::ostream &os, const Password &password);
 };
