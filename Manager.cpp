@@ -547,9 +547,9 @@ void Manager::printMenu(){
 void Manager::writeToFile() {
     ofstream outdata;
 
-    outdata.open("C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\test.txt");
+    outdata.open(fileName);
 
-    Password p  {"test","test1234","12344341",categories[1],true};
+    Password p  {"pom",mainKey,"pom",categories[1],true};
     p.codePassword();
     outdata << p.getPassword() << endl;
 
@@ -574,6 +574,7 @@ void Manager::writeToFile() {
 
 }
 
-Manager::Manager(const vector<Password> &passwords, const vector<Category> &categories, const string &lastTimeStamp)
-        : passwords(passwords), categories(categories), lastTimeStamp(lastTimeStamp) {}
-
+Manager::Manager(const vector<Password> &passwords, const vector<Category> &categories, const string &lastTimeStamp,
+                 const string &mainKey, const string &fileName) : passwords(passwords), categories(categories),
+                                                                  lastTimeStamp(lastTimeStamp), mainKey(mainKey),
+                                                                  fileName(fileName) {}

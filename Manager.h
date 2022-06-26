@@ -10,12 +10,14 @@ class Manager {
     std::vector <Password> passwords;
     std::vector <Category> categories;
     std::string lastTimeStamp;
+    std::string mainKey;
+    std::string fileName;
 
 public:
     Manager(const std::vector<Password> &passwords, const std::vector<Category> &categories);
 
     Manager(const std::vector<Password> &passwords, const std::vector<Category> &categories,
-            const std::string &lastTimeStamp);
+            const std::string &lastTimeStamp, const std::string &mainKey, const std::string &fileName);
 
     /**sluzy do znajdowania hasel wczytanych z pliku*/
     void findPassword();

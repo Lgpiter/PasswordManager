@@ -8,55 +8,72 @@
  * sprawdza czy podane przez uzytkownika haslo zgadza sie z haslem pliku
  * @param[in] s : haslo przekazane przez uzytkownika
  * @return czy haslo jest prawidlowe
+ * @param fileName - nazwa pliku z haslami
  * */
-bool checkIsGoodKey(std::string &s);
+bool checkIsGoodKey(std::string &s, std::string &fileName);
 
 /**
  * czyta kategorie z pliku, a nastepnie dodaje je do vectora
  * @param v - przyjmuje vector kategorii
+ * @param fileName - nazwa pliku z haslami
  */
-void readCategories(std::vector<Category> &v);
+void readCategories(std::vector<Category> &v,std::string &fileName);
 
 /**
  * czyta hasla z pliku, a nastepnie dodaje je do vectora
  * @param v1 vector hasel
  * @param v2 vector kategorii
+ * @param fileName - nazwa pliku z haslami
  * @param mainKey czy zostalo wpisane dobre haslo do pliku
  */
-void readPassword(std::vector<Password> &v1,std::vector<Category> &v2, bool &mainKey);
+void readPassword(std::vector<Password> &v1,std::vector<Category> &v2, bool &mainKey,std::string &fileName);
 
 /**
- * czyta ostatni czas otwarcia pliku
- * @param timeStamp -
+ * * czyta ostatni czas otwarcia pliku
+ * @param timeStamp
+ * @param fileName - nazwa pliku z haslami
  */
-void readListTimeStamp(std::string &timeStamp);
+void readListTimeStamp(std::string &timeStamp,std::string &fileName);
 
 int main() {
+    std::string fileName;
+
+    int choice;
     std::cout << "Jesli chcesz wybrac plik z listy wpisz 1, jesli absoultna sciezke wpisz 0" << std::endl;
+    std::cin >> choice;
+    if(choice == 0){
+        std::cout << "Podaj absolutna sciezke do pliku" << std::endl;
+        std::cin.ignore();
+        std::getline(std::cin,fileName);
+    }
+    else{
+
+    }
+
     std::string key;
     std :: cout << "Wpisz haslo do pliku" << std::endl;
     std::cin >> key;
 
-    bool mainKey = checkIsGoodKey(key);
+    bool mainKey = checkIsGoodKey(key,fileName);
 
     std::string timeStamp;
 
 
     std::vector<Category> categories;
-   readCategories(categories);
+   readCategories(categories,fileName);
 
     if(mainKey){
-        readListTimeStamp(timeStamp);
+        readListTimeStamp(timeStamp,fileName);
 
         std::vector<Password> passwords;
-        readPassword(passwords,categories, mainKey);
+        readPassword(passwords,categories, mainKey,fileName);
 
-        Manager manager {passwords,categories,timeStamp};
+        Manager manager {passwords,categories,timeStamp, key,fileName};
         manager.printMenu();
     }
     else{
         std::vector<Password> passwords;
-        readPassword(passwords,categories, mainKey);
+        readPassword(passwords,categories, mainKey,fileName);
 
         Manager manager {passwords,categories};
         manager.showPasswords();
@@ -67,11 +84,10 @@ int main() {
     return 0;
 }
 
-bool checkIsGoodKey(std::string &s){
+bool checkIsGoodKey(std::string &s,std::string &fileName){
     std::string orginalKey;
 
     std::ifstream fileInput;
-    std::string fileName = "C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\test.txt";
 
     fileInput.open(fileName);
     std::getline(fileInput,orginalKey);
@@ -91,9 +107,9 @@ bool checkIsGoodKey(std::string &s){
         return false;
 }
 
-void readCategories(std::vector<Category> &v){
+void readCategories(std::vector<Category> &v,std::string &fileName){
     std::ifstream fileInput;
-    std::string fileName = "C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\test.txt";
+
     fileInput.open(fileName);
 
     std::string line;
@@ -113,9 +129,8 @@ void readCategories(std::vector<Category> &v){
     fileInput.close();
 }
 
-void readPassword(std::vector<Password> &v1,std::vector<Category> &v2, bool &mainKey){
+void readPassword(std::vector<Password> &v1,std::vector<Category> &v2, bool &mainKey,std::string &fileName){
     std::ifstream fileInput;
-    std::string fileName = "C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\test.txt";
     fileInput.open(fileName);
 
     std::string line;
@@ -143,12 +158,11 @@ void readPassword(std::vector<Password> &v1,std::vector<Category> &v2, bool &mai
     }
 }
 
-void readListTimeStamp(std::string &timeStamp){
+void readListTimeStamp(std::string &timeStamp,std::string &fileName){
    std::vector<std::string> lines;
    std:: string line;
 
     std::ifstream fileInput;
-    std::string fileName = "C:\\Users\\Piotr Zadykowicz\\Desktop\\PasswordManager\\test.txt";
     fileInput.open(fileName);
 
     while (getline(fileInput, line)){
