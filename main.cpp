@@ -4,62 +4,35 @@
 #include "Password.h"
 #include "fstream"
 
+/**
+ * sprawdza czy podane przez uzytkownika haslo zgadza sie z haslem pliku
+ * @param[in] s : haslo przekazane przez uzytkownika
+ * @return czy haslo jest prawidlowe
+ * */
 bool checkIsGoodKey(std::string &s);
+
+/**
+ * czyta kategorie z pliku, a nastepnie dodaje je do vectora
+ * @param v - przyjmuje vector kategorii
+ */
 void readCategories(std::vector<Category> &v);
+
+/**
+ * czyta hasla z pliku, a nastepnie dodaje je do vectora
+ * @param v1 vector hasel
+ * @param v2 vector kategorii
+ * @param mainKey czy zostalo wpisane dobre haslo do pliku
+ */
 void readPassword(std::vector<Password> &v1,std::vector<Category> &v2, bool &mainKey);
+
+/**
+ * czyta ostatni czas otwarcia pliku
+ * @param timeStamp -
+ */
 void readListTimeStamp(std::string &timeStamp);
 
-int main() {    /*
-    password5.codePassword(true);
-    password1.codePassword(true);
-    password2.codePassword(true);
-
-
-    std::cout << "PRZERWA" << std::endl;
-
-    /*
-    password5.decodePassword(true);
-    password1.decodePassword(true);
-    password2.decodePassword(false);
-     */
-
-    /*
-    std::string key;
-    std :: cout << "Wpisz haslo do pliku" << std::endl;
-    std::cin >> key;
-
-     */
-
-
-
-
-    /*
-    bool mainKey = true;
-
-    Category category1 {"Pierwsza",1};
-    Category category2 {"Druga",2};
-    std::vector<Category> kategorie;
-    kategorie.push_back(category1);
-    kategorie.push_back(category2);
-
-    Password password1 {"Do_google1","haslo1", "12345", category1,mainKey};
-    Password password2 {"Do_google2","haslo2", "1234", category1,mainKey};
-    Password password3 {"Do_google3","haslo3", "123", category1,mainKey};
-    Password password4 {"Do_google4","haslo4", "12", category1,mainKey};
-    Password password5 {"A","haslo4", "12", category2,mainKey};
-
-    std::vector<Password> hasla;
-    hasla.push_back(password1);
-    hasla.push_back(password2);
-    hasla.push_back(password3);
-    hasla.push_back(password4);
-    hasla.push_back(password5);
-
-    Manager manager {hasla,kategorie};
-    manager.writeToFile();
-     */
-
-
+int main() {
+    std::cout << "Jesli chcesz wybrac plik z listy wpisz 1, jesli absoultna sciezke wpisz 0" << std::endl;
     std::string key;
     std :: cout << "Wpisz haslo do pliku" << std::endl;
     std::cin >> key;
@@ -94,9 +67,6 @@ int main() {    /*
     return 0;
 }
 
-/**@param[in] s : haslo przekazane przez uzytkownika
- * @return czy haslo jest prawidlowe
- * */
 bool checkIsGoodKey(std::string &s){
     std::string orginalKey;
 
@@ -185,9 +155,14 @@ void readListTimeStamp(std::string &timeStamp){
         lines.push_back(line);
     }
 
+    /**
+     * otrzymanie ostatniej linii, w ktorej zawsze kodowany jest timestamp
+     */
     std::string pom = lines[lines.size() -1];
 
-    //to encode timestamp
+    /**
+     * rozkodowanie timestampa
+     */
     for(char & i : pom){
         i -= 45;
     }

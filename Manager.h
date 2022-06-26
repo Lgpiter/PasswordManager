@@ -23,7 +23,14 @@ public:
     /**sluzy do wyboru przez uzytkownika po jakich kryteriach chce posortowac hasla*/
     void sortType();
 
-    /**sortuje hasla po konkretnych kategoriach*/
+
+    /**
+     * sluzy do sortowania hasel po kategoriach
+     * @tparam functype1
+     * @tparam funcType2
+     * @param f1 -> pierwsza funkcja sortujaca po danej Kategorii
+     * @param f2 -> druga funkcja sotrujaca po danej karegorii
+     */
     template <typename functype1, typename funcType2>
     void sortPasswords(functype1 f1,funcType2 f2);
 
