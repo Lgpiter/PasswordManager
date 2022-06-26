@@ -9,6 +9,10 @@ int Category::getIndex() const {
     return index;
 }
 
+const std::string &Category::getName() const {
+    return name;
+}
+
 void Category::show(){
     std::cout << "Category name: " << this -> name << " index " << this -> index << std::endl;
 }
@@ -18,6 +22,3 @@ std::ostream &operator<<(std::ostream &os, const Category &category) {
     return os;
 }
 
-const std::string &Category::getName() const {
-    return name;
-}

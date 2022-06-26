@@ -95,7 +95,6 @@ void Manager::sortPasswords(functype1 f1,funcType2 f2) {
     for (int i = 0; i < passwords.size(); i++){
         for(int j = i+1; j < passwords.size(); j++){
             if(f1(passwords[i],passwords[j]) < 0) {
-                cout << "WCHODZIMY TU?" << endl;
                 iter_swap(passwords.begin() + i, passwords.begin() + j);
             }
             else if(f1(passwords[i],passwords[j]) == 0){
@@ -211,7 +210,6 @@ void Manager::sortType() {
     }
 }
 
-
 void Manager::editPassword() {
     for(int i = 0; i < passwords.size(); i++){
         cout << i + 1 << ".";
@@ -221,8 +219,6 @@ void Manager::editPassword() {
     int choice;
     cout << "Ktore haslo chcesz zmienic?" << endl;
     cin >> choice;
-
-
 
     int changeChoice;
     cout << "Co chcesz zmienic w hasle? " << endl;
@@ -332,7 +328,6 @@ void Manager::addPassword() {
     }
 }
 
-
 void Manager::addCategory() {
     string name;
     cout << "Podaj nazwe kategori, ktora chcesz stowrzyc " << endl;
@@ -348,7 +343,6 @@ void Manager::addCategory() {
     Category category {name, maxnumber};
     categories.push_back(category);
 }
-
 
 void Manager::deleteCategory() {
     for(auto & categorie : categories)
@@ -372,7 +366,6 @@ void Manager::deleteCategory() {
 
     showPasswords();
 }
-
 
 void Manager::deletePassword() {
     int choice;

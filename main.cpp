@@ -39,6 +39,9 @@ void readListTimeStamp(std::string &timeStamp,std::string &fileName);
 int main() {
     std::string fileName;
 
+    /**
+     * choice -> do wyboru czy plik z listy czy absolutna sciezka
+     */
     int choice;
     std::cout << "Jesli chcesz wybrac plik z listy wpisz 1, jesli absoultna sciezke wpisz 0" << std::endl;
     std::cin >> choice;
@@ -56,6 +59,9 @@ int main() {
 
         }
 
+        /**
+         * choice2 -> do wyboru ktory plik otworzyc
+         */
         int choice2;
         std::cout << "Wybierz numer pliku ktory chcesz otworzyc" << std::endl;
         std::cin >> choice2;
@@ -69,9 +75,11 @@ int main() {
             }
         }
     }
-    std::cout << fileName << std::endl;
 
 
+    /**
+     * klucz glowny do pliku
+     */
     std::string key;
     std :: cout << "Wpisz haslo do pliku" << std::endl;
     std::cin >> key;
@@ -82,7 +90,7 @@ int main() {
 
 
     std::vector<Category> categories;
-   readCategories(categories,fileName);
+    readCategories(categories,fileName);
 
     if(mainKey){
         readListTimeStamp(timeStamp,fileName);
@@ -122,14 +130,10 @@ bool checkIsGoodKey(std::string &s,std::string &fileName){
     /**
      * petla do odkodowania hasla
      */
-
     for(int i = 0; i < orginalKey.size(); i++){
         pom = orginalKey[i] - 135;
         orginalKey[i] = pom;
     }
-
-
-
 
 
     if(orginalKey == s) {

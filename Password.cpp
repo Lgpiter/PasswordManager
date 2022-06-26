@@ -46,6 +46,9 @@ void Password::codePassword() {
     std::string code = "";
     int pom;
 
+    /**
+     * petla do kodowania obecnego hasla i przesuwania go o odpowiednia ilosc znakow ASCII
+     */
     for(int i = 0; i < password.length(); i++){
         if (goodKey)
             pom = password[i] + 135;
@@ -62,6 +65,9 @@ void Password::decodePassword() {
     std::string normalPasswrod="";
     int pom;
 
+    /**
+     * petla do dekodowania obecnego hasla i przesuwania go o odpowiednia ilosc znakow ASCII
+     */
     for(int i = 0; i < password.length(); i++){
         if (goodKey)
             pom = password[i] - 135;
