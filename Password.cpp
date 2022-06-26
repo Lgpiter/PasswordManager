@@ -14,8 +14,6 @@ const std::string &Password::getPassword() const {
     return password;
 }
 
-
-
 const Category &Password::getCategory() const {
     return category;
 }

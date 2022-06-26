@@ -89,18 +89,14 @@ int main() {    /*
         manager.showPasswords();
         manager.writeToFile();
     }
-    /*
-   std::vector<Password> passwords;
-    readPassword(passwords,categories, mainKey);
 
-    Manager manager {passwords,categories};
-    manager.showPasswords();
-    manager.printMenu();
-     */
 
     return 0;
 }
 
+/**@param[in] s : haslo przekazane przez uzytkownika
+ * @return czy haslo jest prawidlowe
+ * */
 bool checkIsGoodKey(std::string &s){
     std::string orginalKey;
 

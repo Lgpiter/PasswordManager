@@ -10,6 +10,8 @@ class Password {
     std::string password;
     std::string login;
     Category category;
+
+    /**przekazanie czy uzytkownik podal dobre haslo do pliku*/
     bool goodKey;
 
 public:
@@ -32,9 +34,13 @@ public:
 
     void setCategory(const Category &category);
 
+    /** wypisuje na konsole informacje o hasle*/
     void show();
 
+    /**sluzy do zakodowania hasla w celu zapisania do pliku */
     void codePassword();
+
+    /**sluzy do rozkodowania hasel z pliku*/
     void decodePassword();
 
     friend std::ostream &operator<<(std::ostream &os, const Password &password);

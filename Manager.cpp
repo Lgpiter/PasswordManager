@@ -215,7 +215,7 @@ void Manager::sortType() {
     }
 }
 
-//DZIALA
+
 void Manager::editPassword() {
     for(int i = 0; i < passwords.size(); i++){
         cout << i + 1 << ".";
@@ -282,7 +282,6 @@ void Manager::addPassword() {
     cin.ignore();
     getline(cin,name);
     cout << "Podaj login dopasowany do tego hasla" << std::endl;
-    cin.ignore();
     getline(cin,login);
 
     int pom = 0; //condition to our while
@@ -298,7 +297,7 @@ void Manager::addPassword() {
             pom = 1;
         }
         else if (choice == 1){
-            cout << "Podaj swoje haslo";
+            cout << "Podaj swoje haslo" << endl;
             cin >>password;
             cout << "Sila Twojego hasla to: ";
             switch (isSafe(password)) {
@@ -337,7 +336,7 @@ void Manager::addPassword() {
     }
 }
 
-//dziala
+
 void Manager::addCategory() {
     string name;
     cout << "Podaj nazwe kategori, ktora chcesz stowrzyc " << endl;
@@ -354,7 +353,7 @@ void Manager::addCategory() {
     categories.push_back(category);
 }
 
-//dziala
+
 void Manager::deleteCategory() {
     for(auto & categorie : categories)
         categorie.show();
@@ -378,7 +377,7 @@ void Manager::deleteCategory() {
     showPasswords();
 }
 
-//dziala
+
 void Manager::deletePassword() {
     int choice;
 
@@ -404,7 +403,6 @@ void Manager::showPasswords() {
     }
 }
 
-//funkcja dziala
 int Manager::isSafe(const std::string& password) {
     //to check if all parameters are fine
     int counter = 0;
@@ -482,9 +480,10 @@ void Manager::showLastTimeOpened(){
 };
 
 void Manager::printMenu(){
+    /**do poruszania sie uzytkownika po menu glownym*/
     int choice = 0;
 
-    while (choice != 8) {
+    while (choice != 10) {
         cout << "1.Wyszukaj hasla" << endl;
         cout << "2.Posortuj hasla" << endl;
         cout << "3.Dodaj haslo" << endl;
@@ -530,13 +529,13 @@ void Manager::printMenu(){
                 showPasswords();
                 break;
             }
-            case 10: {
-                writeToFile();
-                return;
-            }
             case 9: {
                 showLastTimeOpened();
                 break;
+            }
+            case 10: {
+                writeToFile();
+                return;
             }
             default: {
                 cout << "Wybrales zly numer sprobuj jeszcze raz" << endl;
@@ -565,12 +564,10 @@ void Manager::writeToFile() {
     time_t currtime=time(0);
     std::string timestamp = std::asctime(localtime(&currtime));
 
-    //for to code timestamp
+    /**petla do zakodowanie timestampa*/
     for(int i = 0; i < timestamp.length(); i++){
         timestamp[i] += 45;
     }
-
-
 
     outdata << timestamp;
     outdata.close();
