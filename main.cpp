@@ -3,6 +3,7 @@
 #include "Manager.h"
 #include "Password.h"
 #include "fstream"
+#include "filesystem"
 
 /**
  * sprawdza czy podane przez uzytkownika haslo zgadza sie z haslem pliku
@@ -47,8 +48,29 @@ int main() {
         std::getline(std::cin,fileName);
     }
     else{
+        int counter = 1;
+        std::filesystem::path path1 = std::filesystem::current_path().parent_path();
+        for(auto & file : std::filesystem::directory_iterator(path1)){
+            if(file.path().extension() == ".txt" && file.path().filename() != "CMakeLists.txt")
+                std::cout <<counter++ << "." << file.path().filename() << std::endl;
 
+        }
+
+        int choice2;
+        std::cout << "Wybierz numer pliku ktory chcesz otworzyc" << std::endl;
+        std::cin >> choice2;
+
+        int counter2 = 1;
+        for(auto & file : std::filesystem::directory_iterator(path1)){
+            if(file.path().extension() == ".txt" && file.path().filename() != "CMakeLists.txt") {
+                if(choice2 == counter2)
+                    fileName = file.path().string();
+                counter2++;
+            }
+        }
     }
+    std::cout << fileName << std::endl;
+
 
     std::string key;
     std :: cout << "Wpisz haslo do pliku" << std::endl;
@@ -95,12 +117,22 @@ bool checkIsGoodKey(std::string &s,std::string &fileName){
 
 
     int pom;
+
+
+    /**
+     * petla do odkodowania hasla
+     */
+
     for(int i = 0; i < orginalKey.size(); i++){
         pom = orginalKey[i] - 135;
         orginalKey[i] = pom;
     }
 
-    if(orginalKey== s) {
+
+
+
+
+    if(orginalKey == s) {
         return true;
     }
     else
@@ -144,7 +176,6 @@ void readPassword(std::vector<Password> &v1,std::vector<Category> &v2, bool &mai
     std :: string pom;
 
     while(fileInput >> pom){
-           // std:: cout << pom<<"Name: " << name<<"Pass: " << password <<"Login: "<<login <<"Category: " << category <<"INDEX: " << categoryIndex;
             if(pom == "Password:") {
                 fileInput >> name >> password >> login >> category >> categoryIndex;
                 for (auto &i: v2) {
@@ -182,7 +213,6 @@ void readListTimeStamp(std::string &timeStamp,std::string &fileName){
     }
 
     timeStamp = pom;
-
     fileInput.close();
 
 }

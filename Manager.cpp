@@ -10,9 +10,6 @@ using namespace std;
 
 Manager::Manager(const vector<Password> &passwords, const vector<Category> &categories) : passwords(passwords),
                                                                                           categories(categories) {}
-
-
-//DZIALA
 void Manager::findPassword() {
     char choice;
     cout << "Podaj po jakim parametrze chcesz wyszukac hasel " << endl;
@@ -93,7 +90,6 @@ void Manager::findPassword() {
 }
 
 
-//DZIALA
 template <typename functype1, typename funcType2>
 void Manager::sortPasswords(functype1 f1,funcType2 f2) {
     for (int i = 0; i < passwords.size(); i++){
@@ -564,10 +560,13 @@ void Manager::writeToFile() {
     time_t currtime=time(0);
     std::string timestamp = std::asctime(localtime(&currtime));
 
+
     /**petla do zakodowanie timestampa*/
+
     for(int i = 0; i < timestamp.length(); i++){
         timestamp[i] += 45;
     }
+
 
     outdata << timestamp;
     outdata.close();
